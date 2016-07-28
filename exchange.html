@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>sort</title>
+	<style>
+	.out{
+		width:900px;
+		height:500px;
+		border: 2px solid #a50000;
+		margin:0 auto;
+	}
+	.out .inner{
+		box-sizing:border-box;
+		width: 260px;
+		height:200px;
+		margin:20px;
+		background: #a50000;
+		text-align: center;
+		line-height: 200px;
+		color: #fff;
+		font-size: 100px;
+		float: left;
+	}
+	#hot{
+		border: 2px dashed white;
+	}
+	</style>
+</head>
+<body>
+	<div class="out">
+		<div class="inner">1</div>
+		<div class="inner">2</div>
+		<div class="inner">3</div>
+		<div class="inner">4</div>
+		<div class="inner">5</div>
+		<div class="inner">6</div>
+	</div>
+</body>
+<script>
+	var boxs=document.querySelectorAll(".inner");
+	var dragElm = null;
+	function dragStart(e){
+		dragElm = this;
+		e.dataTransfer.setData("text/html",this.innerHTML)
+	}
+	function enter(e){
+		e.preventDefault();
+		this.id="hot";
+	}
+	function over(e){
+		e.preventDefault();
+	}
+	function leave(e){
+		e.preventDefault();
+		this.removeAttribute("id");
+	}
+	function drop(e){
+		// e.preventDefault();
+		dragElm.innerHTML=this.innerHTML;
+		this.innerHTML=e.dataTransfer.getData("text/html");
+		this.removeAttribute("id");
+	}
+	for (var i = 0; i < boxs.length; i++) {
+		boxs[i].draggable=true;
+		boxs[i].addEventListener("dragstart",dragStart);
+		boxs[i].addEventListener("dragenter",enter);
+		boxs[i].addEventListener("dragover",over);
+		boxs[i].addEventListener("dragleave",leave);
+		boxs[i].addEventListener("drop",drop);
+	};
+</script>
+</html>
